@@ -6,6 +6,9 @@
 # http://doc.scrapy.org/en/latest/topics/spider-middleware.html
 
 from scrapy import signals
+import requests
+import random
+from JdBook.settings import USER_AGENT_LIST
 
 
 class JdbookSpiderMiddleware(object):
@@ -54,3 +57,33 @@ class JdbookSpiderMiddleware(object):
 
     def spider_opened(self, spider):
         spider.logger.info('Spider opened: %s' % spider.name)
+
+
+class RandomUserAgent(object):
+    def process_request(self, request, spider):
+        ua = random.choice(USER_AGENT_LIST)
+        print(ua)
+        request.headers['User-Agent'] = ua
+
+
+class RandomProxy(object):
+    def process_request(self, request, spider):
+        # 随机获取一个代理
+        proxy = self.get_proxy()
+        # 判断代理情况
+        print(proxy)
+
+        request.meta['proxy'] = 'http://' + proxy
+
+    def process_response(self, request, response, spider):
+        if response.status != 200:
+            proxy = self.get_proxy()
+            # 判断代理情况
+            print(proxy)
+            request.meta['proxy'] = 'http://' + proxy
+            return request
+        return response
+
+    def get_proxy(self):
+        response = requests.get('http://127.0.0.1:5010/get/')
+        return response.text

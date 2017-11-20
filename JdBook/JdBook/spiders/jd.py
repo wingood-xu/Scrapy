@@ -6,7 +6,7 @@ import json
 
 class JdSpider(scrapy.Spider):
     name = "jd"
-    allowed_domains = ["jd.com", "3.cn"]
+    allowed_domains = ["3.cn"]
     start_urls = ['https://book.jd.com/booksort.html']
 
     def parse(self, response):
@@ -55,5 +55,5 @@ class JdSpider(scrapy.Spider):
         price_list = response.text
         item = JdbookItem()
         item.update(temp2)
-        item['price'] = (json.loads(price_list))[0]["op"]
+        # item['price'] = (json.loads(price_list))[0]["op"]
         yield item

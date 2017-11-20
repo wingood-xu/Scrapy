@@ -3,22 +3,23 @@ import scrapy
 from JdBook.items import JdbookItem
 import json
 from scrapy_redis.spiders import RedisSpider
+import subprocess
 
 
 class JdSpider(RedisSpider):
     name = "jd_redis"
-    # allowed_domains = ["jd.com", "3.cn"]
-    # start_urls = ['https://book.jd.com/booksort.html']
 
     def __init__(self, *args, **kwargs):
         domain = kwargs.pop('domain', '')
-        # print(111111,domain)
-        self.allowed_domans = list(filter(None, domain.split(',')))
+        self.allowed_domains = list(filter(None, domain.split(',')))
         super(JdSpider, self).__init__(*args, **kwargs)
+        # self.asyn_redis2mongo()
+
 
     redis_key = 'python3'
-    redis_encoding = 'utf-8'
-    redis_batch_size=100
+
+    def asyn_redis2mongo(self):
+        subprocess.call(['python', 'H:/PyProjects/Scrapy/JdBook/JdBook/redis2mongo.py'])
 
     def parse(self, response):
         big_list = response.xpath('//*[@id="booksort"]/div[2]/dl/dt')
@@ -33,6 +34,7 @@ class JdSpider(RedisSpider):
                 temp['small_sort'] = small.xpath('./text()').extract()[0]
                 temp['small_url'] = 'https:' + small.xpath('./@href').extract()[0]
 
+                # print(temp)
                 yield scrapy.Request(temp['small_url'],
                                      callback=self.parse_list,
                                      meta={'meta_1': temp})
@@ -58,13 +60,20 @@ class JdSpider(RedisSpider):
             # 构建price链接
             uid = ''.join(filter(str.isdigit, temp1['detail_link']))
             url = 'https://p.3.cn/prices/mgets?skuIds=J_{}&pduid=15096921403451209881805'.format(uid)
+            # item = JdbookItem()
+            # item.update(temp1)
+            # yield item
 
+            # url = 'https://www.baidu.com'
+            # print(temp1)
             yield scrapy.Request(url, callback=self.parse_price, meta={'meta_2': temp1})
 
     def parse_price(self, response):
+
         temp2 = response.meta['meta_2']
-        price_list = response.text
+        # price_list = response.text
         item = JdbookItem()
         item.update(temp2)
-        item['price'] = (json.loads(price_list))[0]["op"]
+        # item['price'] = json.loads(price_list)[0]["op"]
+        # item['price']=response.status
         yield item

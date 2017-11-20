@@ -16,12 +16,28 @@ NEWSPIDER_MODULE = 'JdBook.spiders'
 
 SCHEDULER = "scrapy_redis.scheduler.Scheduler"
 DUPEFILTER_CLASS = "scrapy_redis.dupefilter.RFPDupeFilter"
-# SCHEDULER_PERSIST = True
+SCHEDULER_PERSIST = True
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = 'JdBook (+http://www.yourdomain.com)'
+# USER_AGENT = 'JdBook (+http://www.yourdomain.com)'
+USER_AGENT_LIST = [
+    "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.19 (KHTML, like Gecko) Chrome/0.2.151.0 Safari/525.19 ",
+    "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.13 (KHTML, like Gecko) Chrome/0.2.149.29 Safari/525.13 ",
+    "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.13(KHTML, like Gecko) Chrome/0.2.149.27 Safari/525.13 ",
+    "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.13 (KHTML, like Gecko) Chrome/0.2.149.27 Safari/525.13 ",
+    "Opera/7.51 (Windows NT 5.1; U) [en] ",
+    "Opera/8.0 (Windows NT 5.1; U; en) ",
+    "Opera/8.0 (Windows NT 5.1; U; zh-cn) ",
+    "Opera/9.80 (Windows NT 5.1; U; ru) Presto/2.7.39 Version/11.00 ",
+    "Opera/9.80 (Windows NT 5.1; U; zh-tw) Presto/2.8.131 Version/11.10 ",
+    "Opera/9.80 (Windows NT 5.1; U; Opera/9.80 (J2ME/MIDP; Opera Mini/5.0.18635/1030; U; en) Presto/2.4.15; ru) Presto/2.8.99 Version/11.10 ",
+    "Opera/9.80 (J2ME/MIDP; Opera Mini/5.0(Windows; U; Windows NT 5.1; en-US)/23.390; U; en) Presto/2.5.25 Version/10.54 ",
+    "Opera/9.80 (J2ME/MIDP; Opera Mini/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.3) Gecko/23.377; U; en) Presto/2.5.25 Version/10.54 ",
+    "Opera/9.80 (J2ME/MIDP; Opera Mini/(Windows; U; Windows NT 5.1; en-US) AppleWebKit/23.411; U; en) Presto/2.5.25 Version/10.54 ",
+    "Opera/9.80 (Windows NT 5.1; Opera Mobi/49; U; en) Presto/2.4.18 Version/10.00 ",
+]
 
 # Obey robots.txt rules
-ROBOTSTXT_OBEY = True
+# ROBOTSTXT_OBEY = True
 
 
 # REDIS_URL= 'redis://172.16.123.128:6379'
@@ -50,15 +66,18 @@ ROBOTSTXT_OBEY = True
 
 # Enable or disable spider middlewares
 # See http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
-#SPIDER_MIDDLEWARES = {
+SPIDER_MIDDLEWARES = {
 #    'JdBook.middlewares.JdbookSpiderMiddleware': 543,
-#}
+    'scrapy.spidermiddlewares.offsite.OffsiteMiddleware':None,
+}
 
 # Enable or disable downloader middlewares
 # See http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
-#DOWNLOADER_MIDDLEWARES = {
-#    'JdBook.middlewares.MyCustomDownloaderMiddleware': 543,
-#}
+# DOWNLOADER_MIDDLEWARES = {
+#    # 'JdBook.middlewares.MyCustomDownloaderMiddleware': 543,
+#    'JdBook.middlewares.RandomUserAgent': 543,
+#    'JdBook.middlewares.RandomProxy': 544,
+# }
 
 # Enable or disable extensions
 # See http://scrapy.readthedocs.org/en/latest/topics/extensions.html
@@ -69,7 +88,7 @@ ROBOTSTXT_OBEY = True
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-#    'JdBook.pipelines.JdbookPipeline': 300,
+   # 'JdBook.pipelines.JdbookPipeline': 300,
     'scrapy_redis.pipelines.RedisPipeline': 300
 }
 
