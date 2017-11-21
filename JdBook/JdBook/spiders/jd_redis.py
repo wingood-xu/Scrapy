@@ -4,6 +4,7 @@ from JdBook.items import JdbookItem
 import json
 from scrapy_redis.spiders import RedisSpider
 import subprocess
+import scrapy_redis.pipelines
 
 
 class JdSpider(RedisSpider):

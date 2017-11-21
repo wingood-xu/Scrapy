@@ -15,6 +15,11 @@ SPIDER_MODULES = ['Douyu.spiders']
 NEWSPIDER_MODULE = 'Douyu.spiders'
 
 IMAGES_STORE = 'H:\PyProjects\Scrapy\Douyu\images'
+
+IMAGES_THUMBS = {
+    'small': (50, 50),
+    'big': (270, 270),
+}
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'Douyu (+http://www.yourdomain.com)'
 

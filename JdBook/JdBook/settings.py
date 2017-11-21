@@ -88,8 +88,9 @@ SPIDER_MIDDLEWARES = {
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   # 'JdBook.pipelines.JdbookPipeline': 300,
-    'scrapy_redis.pipelines.RedisPipeline': 300
+   'JdBook.pipelines.JdPipeline': 300,
+   #  'scrapy_redis.pipelines.RedisPipeline': 300
+   #  'scrapy_redis.pipelines.JdPipeline': 300
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)

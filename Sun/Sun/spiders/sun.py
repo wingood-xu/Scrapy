@@ -6,6 +6,8 @@ from Sun.items import SunItem
 import chardet
 
 
+
+
 class SunSpider(CrawlSpider):
     name = 'sun'
     allowed_domains = ['sun0769.com']
@@ -17,6 +19,8 @@ class SunSpider(CrawlSpider):
         # 'html/question/201711/352493.shtml'
         Rule(LinkExtractor(allow=r'html/question/\d+/\d+.shtml'), callback='parse_item'),
     )
+
+
 
     def parse_item(self, response):
         # print(response.url)
