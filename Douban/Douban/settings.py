@@ -33,15 +33,8 @@ USER_AGENT_LIST = [
     "Opera/9.80 (Windows NT 5.1; Opera Mobi/49; U; en) Presto/2.4.18 Version/10.00 ",
 ]
 
-PROXY_LIST=[
-    {"ip_port": "39.104.28.28:8080"},
-    {"ip_port": "180.250.74.210:8080"},
-    {"ip_port": "183.179.198.93:3128"},
-    {"ip_port": "106.39.179.162:80"},
-    {"ip_port": "101.254.185.156:8080"},
-]
 # Obey robots.txt rules
-ROBOTSTXT_OBEY = True
+ROBOTSTXT_OBEY = False
 
 MONGO_HOST = '127.0.0.1'
 MONGO_PORT = 27017
@@ -82,7 +75,7 @@ MONGO_COLNAME = 'movie'
 DOWNLOADER_MIDDLEWARES = {
     # 'Douban.middlewares.MyCustomDownloaderMiddleware': 543,
     'Douban.middlewares.RandomUserAgent': 543,
-    'Douban.middlewares.RandomProxy': 544,
+    # 'Douban.middlewares.RandomProxy': 544,
 
 }
 
@@ -95,8 +88,8 @@ DOWNLOADER_MIDDLEWARES = {
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-    'Douban.pipelines.DoubanPipeline': 300,
-    'Douban.pipelines.MongoDB': 302,
+    # 'Douban.pipelines.DoubanPipeline': 300,
+    # 'Douban.pipelines.MongoDB': 302,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)

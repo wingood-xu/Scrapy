@@ -8,13 +8,14 @@ import json
 from pymongo import MongoClient
 from scrapy.conf import settings
 
+
 class DoubanPipeline(object):
     def __init__(self):
         self.f = open('movie.json', 'w', encoding='utf-8')
 
     def process_item(self, item, spider):
         print(dict(item))
-        str_data = json.dumps(dict(item),ensure_ascii=False)+',\n'
+        str_data = json.dumps(dict(item), ensure_ascii=False) + ',\n'
         self.f.write(str_data)
         return item
 
@@ -28,7 +29,7 @@ class MongoDB(object):
         port = settings['MONGO_PORT']
         dbname = settings['MONGO_DBNAME']
         colname = settings['MONGO_COLNAME']
-        self.client = MongoClient(host=host,port=port)
+        self.client = MongoClient(host=host, port=port)
         self.db = self.client[dbname]
         self.col = self.db[colname]
 
